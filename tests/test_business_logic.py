@@ -7,6 +7,10 @@ from backend.logic.transactions import compute_balance_without_future_transactio
 
 @pytest.fixture
 def transaction_list_1():
+    """
+    Fixture: A list of transaction from the specification, case 1.
+    """
+    # pylint: disable=line-too-long
     transaction_list = [{'amount': '20', 'date': '2020-01-01', 'state': 'completed', 'type': 'deposit', "user_id": 42},
                         {'amount': '10', 'date': '2020-01-02', 'state': 'failed', 'type': 'deposit', "user_id": 42},
                         {'amount': '30', 'date': '2020-01-05', 'state': 'completed', 'type': 'deposit', "user_id": 42},
@@ -25,6 +29,10 @@ def transaction_list_1():
 
 @pytest.fixture
 def transaction_list_2():
+    """
+    Fixture: A list of transaction from the specification, case 2.
+    """
+    # pylint: disable=line-too-long
     transaction_list = [{'amount': '40', 'date': '2020-01-01', 'state': 'completed', 'type': 'deposit', "user_id": 666},
                         {'amount': '10', 'date': '2020-01-15', 'state': 'pending', 'type': 'refund', "user_id": 666},
                         {'amount': '20', 'date': '2020-01-15', 'state': 'scheduled', 'type': 'scheduled_withdrawal', "user_id": 666}]
@@ -33,10 +41,18 @@ def transaction_list_2():
 
 
 def test_compute_balance_without_future_transactions_case_1(transaction_list_1):
+    """
+    Ensures the business logic for the computation of the current balance is
+    implemented properly in case 1.
+    """
     assert compute_balance_without_future_transactions(transaction_list_1) == 45.0
 
 
 def test_compute_balance_case_1(transaction_list_1):
+    """
+    Ensures the business logic for the computation of the withdrawal coverages
+    is implemented properly in case 1.
+    """
     final_balance, upcoming_withdrawals = compute_balance(45.0, transaction_list_1)
 
     expected_final_balance = 0.0
@@ -72,10 +88,18 @@ def test_compute_balance_case_1(transaction_list_1):
 
 
 def test_compute_balance_without_future_transactions_case_2(transaction_list_2):
+    """
+    Ensures the business logic for the computation of the current balance is
+    implemented properly in case 2.
+    """
     assert compute_balance_without_future_transactions(transaction_list_2) == 30.0
 
 
 def test_compute_balance_case_2(transaction_list_2):
+    """
+    Ensures the business logic for the computation of the withdrawal coverages
+    is implemented properly in case 2.
+    """
     final_balance, upcoming_withdrawals = compute_balance(30.0, transaction_list_2)
 
     expected_final_balance = 10.0

@@ -92,13 +92,15 @@ def compute_balance(current_balance: float,
                     transactions: List[TransactionRow]) \
                     -> Tuple[float, List[Dict[str, Union[int, float, date]]]]:
     """
-    Computes the distribution of the current balance (given by compute_balance_without_future_transactions) 
+    Computes the distribution of the current balance (given by compute_balance_without_future_transactions)
     over the upcoming withdrawals.
     :param current_balance: The balance without upcoming withdrawals
     :param transactions: a user's transaction list
     :return: Tuple containing
-             1. the final balance, i.e. after the amount of each upcoming withdrawal has been withdrawn from the current balance
-             2. the list of each upcoming witdrawal (dict) along with details on how the current balance covers each withdrawal
+             1. the final balance, i.e. after the amount of each upcoming withdrawal has been withdrawn from
+                the current balance
+             2. the list of each upcoming witdrawal (dict) along with details on how the current balance
+                covers each withdrawal
     """
 
     # Ensure only upcoming withdrawals are considered in the computation and ensure they
