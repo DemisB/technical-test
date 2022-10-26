@@ -89,22 +89,21 @@ def test_get_balance():
                 "withdrawal_amount": 20.0,
                 "amount_covered": 20.0,
                 "percent_coverage_with_current_balance": 100,
-                "scheduled_date": "2020-02-15"
+                "scheduled_date": "2020-02-15",
             },
             {
                 "withdrawal_amount": 20.0,
                 "amount_covered": 20.0,
                 "percent_coverage_with_current_balance": 100,
-                "scheduled_date": "2020-03-15"
+                "scheduled_date": "2020-03-15",
             },
             {
                 "withdrawal_amount": 300.0,
                 "amount_covered": 17.0,
                 "percent_coverage_with_current_balance": 6,
-                "scheduled_date": "2020-04-15"
-            }
-        ]
+                "scheduled_date": "2020-04-15",
+            },
+        ],
     }
 
     assert resp_body == expected_response
- 
