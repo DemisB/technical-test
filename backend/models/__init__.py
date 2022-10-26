@@ -6,4 +6,5 @@ from backend.models.models import (
     TransactionType,
     User,
     UserRow,
+    UserBalanceAPIResponse
 )

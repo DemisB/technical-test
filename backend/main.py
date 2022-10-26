@@ -1,10 +1,10 @@
-from typing import Any, List
+from typing import List
 
 from fastapi import FastAPI, HTTPException
 
 from backend.db import InMemoryDB
 from backend.logic import transactions
-from backend.models import Transaction, TransactionRow
+from backend.models import Transaction, TransactionRow, UserBalanceAPIResponse
 
 app = FastAPI()
 
@@ -23,15 +23,15 @@ async def get_transactions(user_id: int) -> List[TransactionRow]:
     return transactions.transactions(db, user_id)
 
 
-@app.get("/users/{user_id}/transactions/balance")
-async def get_balance(user_id: int) -> Any:  # pylint: disable=unused-argument
+@app.get("/users/{user_id}/transactions/balance", response_model=UserBalanceAPIResponse)
+async def get_balance(user_id: int) -> UserBalanceAPIResponse:
     """Computes the balance of payments for a user subscription."""
     user_transactions = transactions.transactions(db, user_id)
     current_balance = transactions.compute_balance_without_future_transactions(user_transactions)
     final_balance, upcoming_withdrawals = transactions.compute_balance(current_balance, user_transactions)
 
-    return {"balance": final_balance,
-            "upcoming_withdrawals": upcoming_withdrawals}
+    return UserBalanceAPIResponse(balance=final_balance,
+                                  upcoming_withdrawals=upcoming_withdrawals)
 
 
 @app.get("/users/{user_id}/transactions/{transaction_id}")

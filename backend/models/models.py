@@ -1,5 +1,6 @@
 from datetime import date
 from enum import Enum
+from typing import List
 
 from pydantic import BaseModel
 
@@ -39,3 +40,15 @@ class Transaction(BaseModel):
 class TransactionRow(Row, Transaction):
     user_id: int
     state: TransactionState
+
+
+class WithdrawalCoverage(BaseModel):
+    withdrawal_amount: float
+    amount_covered: float
+    percent_coverage_with_current_balance: int
+    scheduled_date: date
+
+
+class UserBalanceAPIResponse(BaseModel):
+    balance: float
+    upcoming_withdrawals: List[WithdrawalCoverage]
