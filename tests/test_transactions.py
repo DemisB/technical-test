@@ -52,3 +52,36 @@ def test_create_transaction(deposit_transaction):
     assert transaction["type"] == "deposit"
     assert transaction["date"] == date.today().isoformat()
     assert transaction["state"] == "pending"
+
+
+def test_get_balance():
+    response = client.get("users/1/transactions/balance")
+    assert response.status_code == 200
+    resp_body = response.json()
+
+    expected_response = {
+        "balance": 0.0,
+        "upcoming_withdrawals": [
+            {
+                "withdrawal_amount": 20.0,
+                "amount_covered": 20.0,
+                "percent_coverage_with_current_balance": 100,
+                "scheduled_date": "2020-02-15"
+            },
+            {
+                "withdrawal_amount": 20.0,
+                "amount_covered": 20.0,
+                "percent_coverage_with_current_balance": 100,
+                "scheduled_date": "2020-03-15"
+            },
+            {
+                "withdrawal_amount": 300.0,
+                "amount_covered": 17.0,
+                "percent_coverage_with_current_balance": 6,
+                "scheduled_date": "2020-04-15"
+            }
+        ]
+    }
+
+    assert resp_body == expected_response
+ 
